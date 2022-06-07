@@ -1,0 +1,13 @@
+
+0
+java:S1220""Move this file to a named package.
+y
+java:S4602"^Remove the annotation "@ComponentScan" or move the annotated class out of the default package.(èíÒúÿÿÿÿ
+V
+java:S1854";Remove this useless assignment to local variable "service".(¼«§ıÿÿÿÿÿ
+S	java:S106"9Replace this use of System.out or System.err by a logger.(ıÍŞÛüÿÿÿÿ
+V	java:S125"<This block of commented-out lines of code should be removed.(µÇÒøÿÿÿÿ
+V	java:S125"<This block of commented-out lines of code should be removed.(Œ¥Úôşÿÿÿÿ
+Q	java:S125"<This block of commented-out lines of code should be removed.(‰˜Â©
+I
+java:S1128".Remove this unused import 'java.util.Scanner'.(ÒÜÅ¸úÿÿÿÿ
