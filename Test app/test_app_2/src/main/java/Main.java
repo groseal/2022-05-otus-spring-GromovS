@@ -44,6 +44,17 @@ public class Main {
                 if (answer.getAnswer().equalsIgnoreCase(answerUser))
                     return answer.getAnswerCost();
             }
+        } else if (task.getQuestion().getQuestionType().equals(Question.QuestionType.QUESTION_WITH_MULTIPLE_ANSVERS)) {
+            int scoreForAnswers = 0;
+            String[] masAnswersUser = answerUser.split(",");
+            for (Answer answer : answers) {
+                for (int i = 0; i < masAnswersUser.length; i++) {
+                    if (answer.getAnswer().equalsIgnoreCase(masAnswersUser[i].trim())) {
+                        scoreForAnswers += answer.getAnswerCost();
+                    }
+                }
+            }
+            return scoreForAnswers;
         }
         return 0;
     }
