@@ -26,12 +26,11 @@ public class TaskDaoImpl implements TaskDao {
     @Override
     public List getListOfTasks() {
         List<Task> tasks = new ArrayList();
-        String taskString;
 
         try (InputStream in = getClass().getResourceAsStream(repository);
              BufferedReader reader = new BufferedReader(new InputStreamReader(in))) {
 
-            taskString = reader.readLine();
+            String taskString = reader.readLine();
             while (taskString != null) {
                 tasks.add(getTaskFromString(taskString));
                 taskString = reader.readLine();
@@ -50,7 +49,7 @@ public class TaskDaoImpl implements TaskDao {
 
         String[] mas = taskStr.split(";");
 
-        if (mas[0].equals("1")) {
+        if (mas[0].charAt(mas[0].length() - 1) == '1') {
             question.setQuestionType(Question.QuestionType.QUESTION_WITH_ONE_ANSVER);
             question.setSaveEnteredAnswer(false);
         } else if (mas[0].equals("2")) {
@@ -75,7 +74,6 @@ public class TaskDaoImpl implements TaskDao {
 
         task.setQuestion(question);
         task.setAnswers(answers);
-
         return task;
     }
 }

@@ -22,7 +22,7 @@ public class TaskServiceImpl implements TaskService {
     }
 
     @Override
-    public List<Task> giveUserTasks(String path) {
+    public List<Task> getListOfTasks(String path) {
         return taskDao.getListOfTasks();
     }
 }

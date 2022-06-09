@@ -23,18 +23,19 @@ public class Main {
 
         Scanner in = new Scanner(System.in);
         System.out.println("Enter last name and first name.");
-        String name = in.next();
+        String name = in.nextLine();
 
-        List<Task> tasks = service.giveUserTasks(taskDao.getRepository());
+        List<Task> tasks = service.getListOfTasks(taskDao.getRepository());
 
         int pointsReceived = 0;
         for (Task task : tasks) {
             System.out.println(task);
-            System.out.println("Enter answer:");
+            System.out.println("Enter answers separated by commas:");
             String answer = in.nextLine();
             pointsReceived += chowManyPointsPerAnswer(task, answer);
             System.out.println(pointsReceived);
         }
+        System.out.println(name + ", your result " + pointsReceived + " points.");
     }
 
     private static int chowManyPointsPerAnswer(Task task, String answerUser) {
@@ -44,7 +45,8 @@ public class Main {
                 if (answer.getAnswer().equalsIgnoreCase(answerUser))
                     return answer.getAnswerCost();
             }
-        } else if (task.getQuestion().getQuestionType().equals(Question.QuestionType.QUESTION_WITH_MULTIPLE_ANSVERS)) {
+        }
+        if (task.getQuestion().getQuestionType().equals(Question.QuestionType.QUESTION_WITH_MULTIPLE_ANSVERS)) {
             int scoreForAnswers = 0;
             String[] masAnswersUser = answerUser.split(",");
             for (Answer answer : answers) {
