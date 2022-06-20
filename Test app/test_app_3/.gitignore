@@ -1,7 +1,3 @@
-# Project exclude paths
-/Test app/test_app_1/target/
-/Test app/test_app_2/target/
-
 HELP.md
 target/
 !.mvn/wrapper/maven-wrapper.jar

@@ -24,7 +24,7 @@ public class TaskDaoImpl implements TaskDao {
     }
 
     @Override
-    public List getListOfTasks() {
+    public List<Task> getListOfTasks() {
         List<Task> tasks = new ArrayList();
 
         try (InputStream in = getClass().getResourceAsStream(repository);
@@ -46,34 +46,37 @@ public class TaskDaoImpl implements TaskDao {
         Question question = new Question();
         List<Answer> answers = new ArrayList<>();
         Task task = new Task();
+        String[] linesWithQuestions = taskStr.split(";");
 
-        String[] mas = taskStr.split(";");
-
-        if (mas[0].charAt(mas[0].length() - 1) == '1') {
-            question.setQuestionType(Question.QuestionType.QUESTION_WITH_ONE_ANSVER);
-            question.setSaveEnteredAnswer(false);
-        } else if (mas[0].equals("2")) {
-            question.setQuestionType(Question.QuestionType.QUESTION_WITH_MULTIPLE_ANSVERS);
-            question.setSaveEnteredAnswer(false);
-        } else {
-            question.setQuestionType(Question.QuestionType.OPEN_ENDED_QUESTION);
-            question.setSaveEnteredAnswer(true);
-        }
-        question.setQuestion(mas[1]);
+        Question.QuestionType questionType = questionTypeDefinition(linesWithQuestions);
+        question.setQuestionType(questionType);
+        question.setSaveEnteredAnswer(questionType.equals(Question.QuestionType.OPEN_ENDED_QUESTION));
+        question.setQuestion(linesWithQuestions[1]);
         question.setQuestionResolved(false);
 
-        for (int i = 2; i < mas.length; i += 3) {
+        for (int i = 2; i < linesWithQuestions.length; i += 3) {
             Answer answer = new Answer();
             answer.setAnswerType(false);
             answer.setAnswerChosenByAnswerer(false);
-            answer.setCorrectAnswer(mas[i].equals("1"));
-            answer.setAnswer(mas[i + 1]);
-            answer.setAnswerCost(Integer.parseInt(mas[i + 2]));
+            answer.setCorrectAnswer(linesWithQuestions[i].equals("1"));
+            answer.setAnswer(linesWithQuestions[i + 1]);
+            answer.setAnswerCost(Integer.parseInt(linesWithQuestions[i + 2]));
             answers.add(answer);
         }
 
         task.setQuestion(question);
         task.setAnswers(answers);
         return task;
+    }
+
+    private Question.QuestionType questionTypeDefinition(String[] linesWithQuestions) {
+        char questionType = linesWithQuestions[0].charAt(linesWithQuestions[0].length() - 1);
+        if (questionType == '1') {
+            return Question.QuestionType.QUESTION_WITH_ONE_ANSVER;
+        } else if (linesWithQuestions[0].equals("2")) {
+            return Question.QuestionType.QUESTION_WITH_MULTIPLE_ANSVERS;
+        } else {
+            return Question.QuestionType.OPEN_ENDED_QUESTION;
+        }
     }
 }

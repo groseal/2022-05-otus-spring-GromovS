@@ -48,10 +48,10 @@ public class Main {
         }
         if (task.getQuestion().getQuestionType().equals(Question.QuestionType.QUESTION_WITH_MULTIPLE_ANSVERS)) {
             int scoreForAnswers = 0;
-            String[] masAnswersUser = answerUser.split(",");
+            String[] arrayUserAnswers = answerUser.split(",");
             for (Answer answer : answers) {
-                for (int i = 0; i < masAnswersUser.length; i++) {
-                    if (answer.getAnswer().equalsIgnoreCase(masAnswersUser[i].trim())) {
+                for (int i = 0; i < arrayUserAnswers.length; i++) {
+                    if (answer.getAnswer().equalsIgnoreCase(arrayUserAnswers[i].trim())) {
                         scoreForAnswers += answer.getAnswerCost();
                     }
                 }
